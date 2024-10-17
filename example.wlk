@@ -5,7 +5,7 @@ class ArmaDeFilo{
   method poderDeAtaque() = filo * longitud
 }
 
-class ArmaCotundente{
+class ArmaContundente{
   const peso 
 
   method poderDeAtaque() = peso
@@ -20,7 +20,7 @@ object escudo{
 }
 
 class Mirmillones{
-  var vida = 100
+  var property vida = 100
   var property arma
   var property armadura
   var property fuerza
@@ -37,7 +37,7 @@ class Mirmillones{
     vida = (vida - valor).max(0)
   }
 
-  method defensa() = armadura.puntos() + self.destreza()
+  method defensa() = armadura.puntos(self) + self.destreza()
 
   method pelear(gladiador) {
     self.atacarA(gladiador)
@@ -50,12 +50,16 @@ class Mirmillones{
     const nuevoGrupo new Grupo(nombre = "mirmillolandia", gladiadores= [self, gladiador])
     return nuevoGrupo
   }
+
+  method curarse(){
+    vida = vida + 30
+  }
 }
 
 class Dimachaerus{
-  var vida = 100
+  var property vida = 100
   var property armas
-  var destreza
+  var property destreza
 
   method fuerza() = 10
 
@@ -85,12 +89,15 @@ class Dimachaerus{
     const nuevoGrupo new Grupo(nombre = "D-" + sumaDePoderes, gladiadores= [self, gladiador])
     return nuevoGrupo
   }
+  method curarse(){
+    vida = vida + 20
+  }
 }
 
 class Grupo{
   const property nombre
   var property peleas = 0
-  const gladiadores = []
+  const property gladiadores = []
 
   method agregarMiembro(miembro){
     gladiadores.add(miembro)
@@ -120,4 +127,23 @@ class Grupo{
         
         return puedenPelear.max({gladiador=> gladiador.fuerza()})
     }
+}
+
+object coliseo {
+  
+  method combateEntreGrupos(unGrupo, otroGrupo){
+    unGrupo.combatir(otroGrupo)
+  }
+
+  method combateGrupoContraGladiador(unGrupo, unGladiador){
+    unGrupo.combatir(unGladiador)
+  }
+
+  method curarGladiador(gladiador){
+    gladiador.curarse()
+  }
+
+  method curarGrupoDeGladiadores(unGrupo){
+    unGrupo.gladiadores().forEach({g => g.curarse()})
+  }
 }

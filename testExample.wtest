@@ -1,9 +1,36 @@
 import example.*
 
-describe "group of tests for pepita" {
+describe "test " {
 
-  test "pepita has initial energy" {
-    assert.equals(100, 100)
+   const espada = new ArmaDeFilo(longitud = 10, filo = 0.9)
+    const daga = new ArmaDeFilo(longitud = 3, filo = 1)
+    const maza = new ArmaContundente(peso = 8)
+    const martillo = new ArmaContundente(peso = 5)
+
+    const m1 = new Mirmillones(arma = espada, armadura = casco, fuerza = 10)
+    const d1 = new Dimachaerus(armas = [daga, martillo, maza], destreza = 12)
+    const m2 = new Mirmillones(arma = daga, armadura = escudo, fuerza = 15)
+    const d2 = new Dimachaerus(armas = [espada, maza, martillo], destreza = 10)
+
+  test "Poder de Ataque de m1" {
+        assert.equals(19, m1.poderDeAtaque())
   }
 
+  test "Defensa de m1" {
+    assert.equals(25, m1.defensa())
+  }
+
+  test "Poder de Ataque de d1" {
+    assert.equals(26, d1.poderDeAtaque())
+  }
+
+  test "Defensa de d1" {
+      assert.equals(6, d1.defensa())
+  }
+
+  test "m1 pelea contra d1" {
+    m1.pelear(d1)
+    assert.equals(81, d1.vida())
+    assert.equals(74, m1.vida())
+  }
 }
